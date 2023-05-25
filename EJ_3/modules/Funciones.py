@@ -25,7 +25,7 @@ def cargar_archivo_peso_minimo(nombre_archivo, grafo_costo, peso_minimo):
         for linea in archivo:
             inicio, destino, peso, costo = linea.strip().split(',')
             if int(peso)>=int(peso_minimo):
-                print(f"Cargado: {inicio},{destino},{costo}")
+                #print(f"Cargado: {inicio},{destino},{costo}")
                 grafo_costo.agregarArista(inicio, destino, costo)
             
 def mostrarRuta(vertice_inicio, vertice_fin, grafo):
