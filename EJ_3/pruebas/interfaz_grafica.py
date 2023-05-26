@@ -13,81 +13,97 @@ ventana = tk.Tk()
 # Establecer las dimensiones de la ventana
 ventana.geometry("400x200")
 def buscar_costo_minimo():
-    boton_cuello_botella.pack_forget()
-    boton_costo_minimo.pack_forget()
+    boton_cuello_botella.grid_forget()
+    boton_costo_minimo.grid_forget()
     cuadro_texto1 = tk.Entry(ventana)
     
     def guardar_valores2():
         peso_minimo=cuadro_texto1.get()
-        cuadro_texto1.pack_forget()
+        cuadro_texto1.grid_forget()
         grafo_costo=Grafo()
         cargar_archivo_peso_minimo("rutas.txt", grafo_costo, peso_minimo)
         lista_ciudades_conectadas = warshall_lista(grafo_costo, "CiudadBs.As.")
         lista_ciudades=grafo_costo.obtenerVertices()
+        
         lista_botones=[]
         def elegir_ciudad_destino(destino):
             dijkstra(grafo_costo, grafo_costo.obtenerVertice("CiudadBs.As."))
             for boton in lista_botones:
-                boton.pack_forget()
+                boton.grid_forget()
             linea="El camino para ir desde CiudadBs.As. a "+str(destino)+" es: "+mostrarRuta(grafo_costo.obtenerVertice("CiudadBs.As."),grafo_costo.obtenerVertice(str(destino)), grafo_costo )+"\n"+"Y su coste es: "+str(grafo_costo.obtenerVertice(str(destino))._distancia)
                 
             etiqueta=tk.Label(ventana, text=linea)
-            etiqueta.pack()
+            etiqueta.grid()
+            
+            
+        contador = 0
+        num_columnas = 2
         for ciudad in lista_ciudades:
-            if ciudad in lista_ciudades_conectadas:
+            fila = contador // num_columnas
+            columna = contador % num_columnas
+            if ciudad in lista_ciudades_conectadas and ciudad != "CiudadBs.As.":
                 button = tk.Button(ventana, text=ciudad,  command=lambda n=ciudad: elegir_ciudad_destino(n))
             else:
                 button = tk.Button(ventana, text=ciudad, state="disabled", command=lambda n=ciudad: elegir_ciudad_destino(n))
-            button.pack(padx=0, pady=0)
+            button.grid(row=fila, column=columna, padx=5, pady=5)
             lista_botones.append(button)
+            contador += 1
+
 
             
     boton_guardar = tk.Button(ventana, text="Setear peso", command=guardar_valores2)
-    cuadro_texto1.pack()
-    boton_guardar.pack()
+    cuadro_texto1.grid()
+    boton_guardar.grid()
         
-# def buscar_costo_minimo():
-#     boton_cuello_botella.pack_forget()
-#     boton_costo_minimo.pack_forget()
-#     cuadro_texto1 = tk.Entry(ventana)
-#     cuadro_texto2 = tk.Entry(ventana)
-#     cuadro_texto3 = tk.Entry(ventana)
-#     def guardar_valores2():
-#         inicio = cuadro_texto1.get()
-#         destino = cuadro_texto2.get()
-#         peso_minimo = cuadro_texto3.get()
-#         cuadro_texto1.pack_forget()
-#         cuadro_texto2.pack_forget()
-#         cuadro_texto3.pack_forget()
-#         boton_guardar.pack_forget()
-#         grafo_costo=Grafo()
-#         cargar_archivo_peso_minimo("rutas.txt", grafo_costo, peso_minimo)
-#         print(warshall(grafo_costo, inicio, destino))
-#         if (warshall(grafo_costo, inicio, destino)):
-#             etiqueta_existen=tk.Label(ventana, text="¡Los nodos estan conectados!")
-#             etiqueta_existen.pack()
-#             dijkstra(grafo_costo, grafo_costo.obtenerVertice(inicio))
-#             texto="El camino es: "+mostrarRuta(grafo_costo.obtenerVertice(inicio), grafo_costo.obtenerVertice(destino), grafo_costo)
-#             etiqueta_camino=tk.Label(ventana, text=texto)
-#             etiqueta_camino.pack()
-#             texto="El costo es: "+str(grafo_costo.obtenerVertice(destino)._distancia)
-#             etiqueta_peso_maximo=tk.Label(ventana, text=texto)
-#             etiqueta_peso_maximo.pack()    
-#     boton_guardar = tk.Button(ventana, text="Guardar", command=guardar_valores2)
-#     cuadro_texto1.pack()
-#     cuadro_texto2.pack()
-#     cuadro_texto3.pack()
-#     boton_guardar.pack()
-
     
 # Función que se ejecuta al hacer clic en el botón de cuello de botella
 def buscar_cuello_de_botella():
     # Ocultar el botón de cuello de botella
-    boton_cuello_botella.pack_forget()
-    boton_costo_minimo.pack_forget()
+    boton_cuello_botella.grid_forget()
+    boton_costo_minimo.grid_forget()
     # Crear los cuadros de texto
-    cuadro_texto1 = tk.Entry(ventana)
-    cuadro_texto2 = tk.Entry(ventana)
+    #cuadro_texto1 = tk.Entry(ventana)
+    #cuadro_texto2 = tk.Entry(ventana)
+    grafo_peso=Grafo()
+    grafo_costo=Grafo()
+    leer_archivo_grafo("rutas.txt", grafo_peso, grafo_costo)
+    lista_de_ciudades=grafo_peso.obtenerVertices()
+    def elegir_ciudad_origen(inicio):
+        for boton in lista_botones:
+            boton.grid_forget()
+        ciudades_conectadas=warshall_lista(grafo_peso, inicio)
+        lista_ciudades=grafo_peso.obtenerVertices()
+        contador = 0
+        num_columnas = 2
+        def elegir_ciudad_destino2(destino):
+            dijkstra_cuello(grafo_peso, grafo_peso.obtenerVertice(inicio))
+            for boton in lista_botones:
+                boton.grid_forget()
+            linea="El camino para ir desde "+str(inicio)+" a "+str(destino)+" es: "+mostrarRuta(grafo_peso.obtenerVertice(str(inicio)),grafo_peso.obtenerVertice(str(destino)), grafo_peso )+"\n"+"Y su coste es: "+str(grafo_peso.obtenerVertice(str(destino))._distancia)
+            
+            etiqueta=tk.Label(ventana, text=linea)
+            etiqueta.grid()
+        for ciudad in lista_ciudades:
+            fila = contador // num_columnas
+            columna = contador % num_columnas
+            if ciudad in ciudades_conectadas and ciudad != "CiudadBs.As.":
+                button = tk.Button(ventana, text=ciudad,  command=lambda n=ciudad: elegir_ciudad_destino2(n))
+            else:
+                button = tk.Button(ventana, text=ciudad, state="disabled", command=lambda n=ciudad: elegir_ciudad_destino2(n))
+            button.grid(row=fila, column=columna, padx=5, pady=5)
+            lista_botones.append(button)
+            contador += 1
+    contador = 0
+    num_columnas = 2
+    lista_botones=[]
+    for ciudad in lista_de_ciudades:
+        fila = contador // num_columnas
+        columna = contador % num_columnas
+        button = tk.Button(ventana, text=ciudad,  command=lambda n=ciudad: elegir_ciudad_origen(n))
+        button.grid(row=fila, column=columna, padx=5, pady=5)
+        lista_botones.append(button)
+        contador += 1
+        
     
     # Función para guardar los valores ingresados
     def guardar_valores():
@@ -96,22 +112,20 @@ def buscar_cuello_de_botella():
         #print("Texto 1:", inicio)
         #print("Texto 2:", destino)
         #print(type(inicio))
-        cuadro_texto1.pack_forget()
-        cuadro_texto2.pack_forget()
-        boton_guardar.pack_forget()
-        grafo_peso=Grafo()
-        grafo_costo=Grafo()
-        leer_archivo_grafo("rutas.txt", grafo_peso, grafo_costo)
+        cuadro_texto1.grid_forget()
+        cuadro_texto2.grid_forget()
+        boton_guardar.grid_forget()
+        
         if (warshall(grafo_peso, inicio, destino)):
             etiqueta_existen=tk.Label(ventana, text="¡Los nodos estan conectados!")
-            etiqueta_existen.pack()
+            etiqueta_existen.grid()
             dijkstra_cuello(grafo_peso, grafo_peso.obtenerVertice(inicio))
             texto="El camino es: "+mostrarRuta(grafo_peso.obtenerVertice(inicio), grafo_peso.obtenerVertice(destino), grafo_peso)
             etiqueta_camino=tk.Label(ventana, text=texto)
-            etiqueta_camino.pack()
+            etiqueta_camino.grid()
             texto="El peso maximo es: "+str(grafo_peso.obtenerVertice(destino)._distancia)
             etiqueta_peso_maximo=tk.Label(ventana, text=texto)
-            etiqueta_peso_maximo.pack()
+            etiqueta_peso_maximo.grid()
         
         
             
@@ -119,9 +133,9 @@ def buscar_cuello_de_botella():
     boton_guardar = tk.Button(ventana, text="Guardar", command=guardar_valores)
     
     # Ubicar los cuadros de texto y el botón de guardar en la ventana
-    cuadro_texto1.pack()
-    cuadro_texto2.pack()
-    boton_guardar.pack()
+    cuadro_texto1.grid()
+    cuadro_texto2.grid()
+    boton_guardar.grid()
 
 # Crear una etiqueta
 etiqueta = tk.Label(ventana, text="¡Bienvenido!")
@@ -130,9 +144,9 @@ etiqueta = tk.Label(ventana, text="¡Bienvenido!")
 boton_cuello_botella = tk.Button(ventana, text="Buscar máximo cuello de botella", command=buscar_cuello_de_botella)
 boton_costo_minimo = tk.Button(ventana, text="Buscar costo minimo para determinado peso", command=buscar_costo_minimo)
 # Ubicar la etiqueta y el botón en la ventana
-etiqueta.pack()
-boton_cuello_botella.pack()
-boton_costo_minimo.pack()
+etiqueta.grid()
+boton_cuello_botella.grid()
+boton_costo_minimo.grid()
 
 # Iniciar el bucle principal de la interfaz gráfica
 ventana.mainloop()
