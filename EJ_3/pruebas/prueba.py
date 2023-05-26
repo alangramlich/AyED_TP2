@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 27 09:23:31 2022
 
-@author: Julian Traversaro
-"""
 from modules.Funciones import *
  
 
