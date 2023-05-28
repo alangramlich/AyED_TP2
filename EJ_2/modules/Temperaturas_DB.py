@@ -84,8 +84,8 @@ class Temperaturas_DB:
         Devuelve la temperatura mínima dentro de un rango de fechas.
 
         Args:
-            fecha1_str (str): La fecha inicial del rango en formato "dd/mm/aaaa".
-            fecha2_str (str): La fecha final del rango en formato "dd/mm/aaaa".
+            fecha1_str: La fecha inicial del rango en formato "dd/mm/aaaa".
+            fecha2_str: La fecha final del rango en formato "dd/mm/aaaa".
 
         Returns:
             float: El valor de la temperatura mínima dentro del rango especificado.
@@ -102,8 +102,8 @@ class Temperaturas_DB:
         Devuelve las temperaturas mínima y máxima dentro de un rango de fechas.
 
         Args:
-            fecha1_str (str): La fecha inicial del rango en formato "dd/mm/aaaa".
-            fecha2_str (str): La fecha final del rango en formato "dd/mm/aaaa".
+            fecha1_str: La fecha inicial del rango en formato "dd/mm/aaaa".
+            fecha2_str: La fecha final del rango en formato "dd/mm/aaaa".
 
         Returns:
             tuple: Una tupla que contiene la temperatura mínima y la temperatura máxima dentro del rango especificado.

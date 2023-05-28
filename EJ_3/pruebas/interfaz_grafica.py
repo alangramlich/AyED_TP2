@@ -79,7 +79,7 @@ def buscar_cuello_de_botella():
             dijkstra_cuello(grafo_peso, grafo_peso.obtenerVertice(inicio))
             for boton in lista_botones:
                 boton.grid_forget()
-            linea="El camino para ir desde "+str(inicio)+" a "+str(destino)+" es: "+mostrarRuta(grafo_peso.obtenerVertice(str(inicio)),grafo_peso.obtenerVertice(str(destino)), grafo_peso )+"\n"+"Y su coste es: "+str(grafo_peso.obtenerVertice(str(destino))._distancia)
+            linea="El camino para ir desde "+str(inicio)+" a "+str(destino)+" es: "+mostrarRuta(grafo_peso.obtenerVertice(str(inicio)),grafo_peso.obtenerVertice(str(destino)), grafo_peso )+"\n"+"Y su cuello de botella es: "+str(grafo_peso.obtenerVertice(str(destino))._distancia)
             
             etiqueta=tk.Label(ventana, text=linea)
             etiqueta.grid()
@@ -129,13 +129,7 @@ def buscar_cuello_de_botella():
         
         
             
-    # Crear el botón de guardar
-    boton_guardar = tk.Button(ventana, text="Guardar", command=guardar_valores)
-    
-    # Ubicar los cuadros de texto y el botón de guardar en la ventana
-    cuadro_texto1.grid()
-    cuadro_texto2.grid()
-    boton_guardar.grid()
+
 
 # Crear una etiqueta
 etiqueta = tk.Label(ventana, text="¡Bienvenido!")
