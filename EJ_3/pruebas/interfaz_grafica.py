@@ -20,6 +20,7 @@ def buscar_costo_minimo():
     def guardar_valores2():
         peso_minimo=cuadro_texto1.get()
         cuadro_texto1.grid_forget()
+        boton_guardar.grid_forget()
         grafo_costo=Grafo()
         cargar_archivo_peso_minimo("rutas.txt", grafo_costo, peso_minimo)
         lista_ciudades_conectadas = warshall_lista(grafo_costo, "CiudadBs.As.")
