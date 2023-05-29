@@ -37,6 +37,7 @@ for vertice in vertices:
     El precio minimo para transportar un mobiliario de peso determinado
     hasta otra ciudad de destino.
 """
+print("------------------------------------------------------------------------------------------------------------------------------")
 #Se inicializa el grafo que nos interesa. Para eso, se utiliza la funcion 
 #cargar_archivo_peso_minimo, que recibe como parametro el peso minimo
 #que tiene que tener una arista para ser considerada valida.
